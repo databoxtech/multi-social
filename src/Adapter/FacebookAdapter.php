@@ -10,22 +10,22 @@ use databoxtech\multisocial\exception\SocialException;
 use Facebook\Exceptions\FacebookSDKException;
 
 /**
- * Class Facebook : facebook adapater for multi social library
+ * Class FacebookAdapter : facebook adapater for multi social library
  * @package databoxtech\multisocial\Adapter
  *
  * Ref: https://developers.facebook.com/docs/graph-api/photo-uploads/
  *
  */
-class Facebook implements SocialAdapter
+class FacebookAdapter implements SocialAdapter
 {
 
     use ApplyConfig;
 
     private  $app_id = '';
     private  $app_secret = '';
-    private  $default_graph_version = 'v2.10';
     private  $access_token = '';
     private  $page_id = '';
+    private  $default_graph_version = 'v2.10';
 
     /**
      * @var \Facebook\Facebook
@@ -38,7 +38,6 @@ class Facebook implements SocialAdapter
     public function __construct($config)
     {
         $this->apply_config($config, ['app_id', 'app_secret', 'access_token', 'page_id']);
-
         try{
             $this->client = new \Facebook\Facebook([
                 'app_id' => $this->app_id,
