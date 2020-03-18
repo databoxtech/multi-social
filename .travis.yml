@@ -2,19 +2,15 @@ language: php
 
 matrix:
   include:
-    - php: 7.1
-      dist: bionic
-      env: COMPOSER_OPTS=""
     - php: 7.2
       dist: bionic
-      env: COMPOSER_OPTS=""
 
 install:
-  - travis_retry composer update --prefer-dist $COMPOSER_OPTS
+  - travis_retry composer update --prefer-dist
 
 script:
-  - vendor/bin/phpunit --exclude-group integration --coverage-text --coverage-clover coverage.xml
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
