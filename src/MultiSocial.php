@@ -80,7 +80,8 @@ class MultiSocial
      */
     public static function postTo($post, $adapterName, $config){
         $ms = new self([$adapterName => $config]);
-        return array_shift($ms->post($post));
+        $refs = $ms->post($post);
+        return array_shift($refs);
     }
 
 }
