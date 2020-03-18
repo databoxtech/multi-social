@@ -2,6 +2,7 @@
 
 
 use databoxtech\multisocial\MultiSocial;
+use databoxtech\multisocial\Post;
 use PHPUnit\Framework\TestCase;
 
 class MultiSocialTest extends TestCase
@@ -27,5 +28,31 @@ class MultiSocialTest extends TestCase
 
         $this->assertNotNull($ms->getAdapter('facebook'));
         $this->assertNull($ms->getAdapter('twitter'));
+    }
+
+    public function testAddAdapter(){
+        $ms = new MultiSocial([]);
+        $mock = $this->getMockAdapter();
+        $ms->addAdapter('mock', $mock);
+        $this->assertEquals($mock, $ms->getAdapter('mock'));
+    }
+
+    public function testPost(){
+        $ms = new MultiSocial([]);
+        $mock = $this->getMockAdapter();
+        $ms->addAdapter('mock', $mock);
+        $post = $this->getMockPost();
+        $references = $ms->post($post);
+        $this->assertIsArray($references);
+    }
+
+
+
+    private function getMockAdapter(){
+        return $this->prophesize(\databoxtech\multisocial\adapter\SocialAdapter::class)->reveal();
+    }
+
+    private function getMockPost(){
+        return  new Post('Caption', 'Post Description', [], []);
     }
 }
