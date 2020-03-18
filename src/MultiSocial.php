@@ -46,6 +46,14 @@ class MultiSocial
 
     /**
      * @param string $adapterName
+     * @param SocialAdapter $adapter
+     */
+    public function addAdapter($adapterName, $adapter){
+        $this->adapters[$adapterName] = $adapter;
+    }
+
+    /**
+     * @param string $adapterName
      * @return SocialAdapter|null
      */
     public function getAdapter($adapterName){
@@ -67,21 +75,6 @@ class MultiSocial
             $references[$adapterName] = $adapter->post($post);
         }
         return $references;
-    }
-
-    /**
-     * Post specified post to specified social platforms
-     *
-     * @param Post $post
-     * @param string $adapterName
-     * @param array $config
-     * @return string post reference
-     * @throws exception\SocialException
-     */
-    public static function postTo($post, $adapterName, $config){
-        $ms = new self([$adapterName => $config]);
-        $refs = $ms->post($post);
-        return array_shift($refs);
     }
 
 }
